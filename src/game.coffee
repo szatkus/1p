@@ -17,8 +17,8 @@ export class Game
 
     draw: () ->
         @context.resetTransform()
+        @context.clearRect 0, 0, @width, @height
         @context.scale @scale, @scale
         @context.translate @width / @scale / 2 - @camera.x, @height / @scale / 2 - @camera.y
-        @context.clearRect 0, 0, @width, @height
         for obj in @objects
             @context.fillRect obj.x, obj.y, obj.width, obj.height
