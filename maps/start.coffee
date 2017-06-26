@@ -1,6 +1,6 @@
-import {BasicObject} from '../src/objects.js'
+import {BasicObject, Player} from '../src/objects.js'
 
-player = new BasicObject {x: 2, y: 2}
+player = new Player {x: 2, y: 2, speed: 3}
 
 export default
     scale: 64
