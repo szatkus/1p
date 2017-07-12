@@ -30,7 +30,6 @@ export class Player extends BasicObject
     constructor: (properties) ->
         super(properties)
         window.addEventListener 'keydown', (e) => @keydown(e)
-        window.addEventListener 'keyup', (e) => @keyup(e)
 
     keydown: (event) ->
         if event.key == 'ArrowLeft'
