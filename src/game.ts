@@ -1,18 +1,5 @@
 import { BasicObject } from './objects'
-
-function generateRandomVector (size: number): number[] {
-  let numbers: number[] = []
-  for (let i = 0; i < size; i++) {
-    numbers[i] = i
-  }
-  let randomVector: number[] = []
-  for (let i = 0; i < size; i++) {
-    let index = Math.floor(Math.random() * numbers.length)
-    randomVector[i] = numbers[index]
-    numbers.splice(index, 1)
-  }
-  return randomVector
-}
+import { Random, getRandom } from './random'
 
 export class Game {
   width: number
@@ -22,7 +9,7 @@ export class Game {
   objects: BasicObject[] = []
   scale = 1
   camera: {x: number, y: number} = { x: 0, y: 0 }
-  randomVector: number[] = []
+  random: Random = new Random([])
   constructor (canvas: HTMLCanvasElement) {
     this.width = canvas.width
     this.height = canvas.height
@@ -30,19 +17,11 @@ export class Game {
   }
 
   start (map) {
-    this.initRandomness()
+    this.random = getRandom()
     this.objects = map.objects
     this.scale = map.scale
     this.camera = map.camera
     this.step()
-  }
-
-  initRandomness () {
-    if (!localStorage['seed']) {
-      let randomVector = generateRandomVector(78697)
-      localStorage['seed'] = randomVector
-    }
-    this.randomVector = localStorage['seed'].split(',').map(x => parseInt(x))
   }
 
   step () {
