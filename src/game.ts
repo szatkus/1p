@@ -1,5 +1,6 @@
-import { BasicObject } from './objects'
+import { BasicObject, Player } from './objects'
 import { Random, getRandom } from './random'
+import { Generator } from './generator'
 
 export class Game {
   width: number
@@ -7,7 +8,7 @@ export class Game {
   context: CanvasRenderingContext2D
   lastTimestamp: number = 0
   objects: BasicObject[] = []
-  scale = 1
+  scale = 64
   camera: {x: number, y: number} = { x: 0, y: 0 }
   random: Random = new Random([])
   constructor (canvas: HTMLCanvasElement) {
@@ -16,11 +17,14 @@ export class Game {
     this.context = canvas.getContext('2d')!
   }
 
-  start (map) {
+  start () {
     this.random = getRandom()
-    this.objects = map.objects
-    this.scale = map.scale
-    this.camera = map.camera
+
+    let player = new Player({ x: 500, y: 4, speed: 3 })
+    let generator = new Generator(this.random, 1000)
+
+    this.objects = generator.generateMap().map((value, index) => !value ? new BasicObject({ x: index % 1000, y: Math.floor(index / 1000) }) : null).filter(v => v !== null).concat([player]) as BasicObject[]
+    this.camera = player
     this.step()
   }
 

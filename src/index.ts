@@ -6,5 +6,5 @@ window.addEventListener('load', () => {
   canvas.width = window.innerWidth
   canvas.height = window.innerHeight
   let game = new Game(canvas)
-  game.start(firstMap)
+  game.start()
 })
