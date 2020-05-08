@@ -47,8 +47,14 @@ export class Game {
     this.context.clearRect(0, 0, this.width, this.height)
     this.context.scale(this.scale, this.scale)
     this.context.translate(this.width / this.scale / 2 - Math.round(this.camera.x), this.height / this.scale / 2 - Math.round(this.camera.y))
+    let left = this.camera.x - this.width / this.scale
+    let top = this.camera.y - this.height / this.scale
+    let right = this.camera.x + this.width / this.scale
+    let bottom = this.camera.y + this.height / this.scale
     for (let obj of this.objects) {
-      this.context.fillRect(Math.round(obj.x), Math.round(obj.y), obj.width, obj.height)
+      if (obj.x + obj.width >= left && obj.x + obj.height >= top && obj.x <= right && obj.y <= bottom) {
+        this.context.fillRect(Math.round(obj.x), Math.round(obj.y), obj.width, obj.height)
+      }
     }
   }
 }
